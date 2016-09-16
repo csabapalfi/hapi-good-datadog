@@ -1,14 +1,14 @@
 {
   "name": "hapi-good-datadog",
-  "description": "Publish Hapi metrics to the Datadog HTTP API",
+  "description": "Publish Hapi Good metrics to Datadog",
   "version": "1.0.0",
   "license": "MIT",
+  "engines" : {
+    "node" : ">=6.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/csabapalfi/hapi-good-datadog.git"
-  },
-  "scripts": {
-    "example": "DEBUG=metrics node example.js"
   },
   "devDependencies": {
     "good": "^7.0.2",

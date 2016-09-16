@@ -7,37 +7,33 @@ const Datadog = require('datadog-metrics').BufferedMetricsLogger;
 
 const internals = {
   defaults: {
-    apiKey: process.env.DATADOG_API_KEY,
-    host: Os.hostname(),
-    prefix: '',
-    flushIntervalSeconds: 15
+    datadog: {
+      host: Os.hostname(),
+      flushIntervalSeconds: 5,
+    },
+    listeners: {}
   },
 };
 
-// Good Reporter API: https://github.com/hapijs/good/blob/master/API.md#reporter-interface
 class GoodDatadog extends Stream.Writable {
 
     constructor(config) {
         super({ objectMode: true });
-        config = config || {};
+
         const settings = Object.assign({}, internals.defaults, config);
-        this.metrics = new Datadog(settings);
+
+        this.datadog = new Datadog(settings.datadog);
+        this.listeners = settings.listeners;
     }
 
     _write(data, enc, callback) {
-        const eventName = data.event;
+        const { event } = data;
+        const { [event]: listener } = this.listeners;
 
-        if (eventName === 'ops') {
-          this.metrics.gauge('memory.rss', data.proc.mem.rss);
-          this.metrics.gauge('load.-1m', data.os.load[0]);
+        if (listener) {
+          listener(data, this.datadog);
         }
 
-        if (eventName === 'response') {
-          this.metrics.histogram('latency', data.responseTime);
-          this.metrics.increment(`status.${data.statusCode}`)
-        }
-
-        // console.log('data %s', JSON.stringify(data, null, 2));
         callback(null);
     }
 }

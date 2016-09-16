@@ -9,12 +9,18 @@ const options = {
     interval: 1000
   },
   reporters: {
-    myDatadogReporter: [{
+    datadog: [{
         module: 'good-squeeze',
         name: 'Squeeze',
         args: [{ ops: '*', response: '*' }]
     }, {
-        module: process.cwd()
+        module: process.cwd(),
+        args: [{
+          listeners: {
+            ops: (data, datadog) =>
+              datadog.gauge('memory.rss', data.proc.mem.rss)
+          }
+        }]
     }],
   }
 };
