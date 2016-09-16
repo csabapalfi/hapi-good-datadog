@@ -16,6 +16,10 @@ const options = {
     }, {
         module: process.cwd(),
         args: [{
+          datadog: {
+            prefix: 'example.app.',
+            flushIntervalSeconds: 2,
+          },
           listeners: {
             ops: (data, datadog) =>
               datadog.gauge('memory.rss', data.proc.mem.rss)
