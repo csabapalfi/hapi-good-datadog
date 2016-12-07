@@ -1,0 +1,16 @@
+{
+  "name": "hapi-good-datadog-example",
+  "description": "hapi-good-datadog example",
+  "version": "2.0.1",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "dependencies": {
+    "good": "^7.0.2",
+    "good-console": "^6.1.2",
+    "good-squeeze": "^4.0.0",
+    "hapi": "^15.0.3",
+    "hapi-good-datadog": "latest"
+  }
+}

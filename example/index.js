@@ -14,7 +14,7 @@ const options = {
         name: 'Squeeze',
         args: [{ ops: '*', response: '*' }]
     }, {
-        module: process.cwd(),
+        module: 'hapi-good-datadog',
         args: [{
           datadog: {
             prefix: 'example.app.',
